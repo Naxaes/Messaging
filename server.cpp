@@ -200,11 +200,7 @@ DWORD WINAPI HandleClient(void* parameter)
 // https://docs.microsoft.com/en-us/cpp/cpp/cdecl?view=vs-2019
 int __cdecl main(int argc, char** argv)
 {
-	if (argc != 2)
-	{
-		fprintf(stderr, "Usage: <port>\n");
-		return 1;
-	}
+	const char* port = argc == 2 ? argv[1] : "443";
 
 	mutex_lock = CreateMutex(NULL, FALSE, NULL);
     if (mutex_lock == NULL) 
@@ -239,7 +235,6 @@ int __cdecl main(int argc, char** argv)
 
 
 	// Resolve the server address and port
-	const char* port = argv[1];
 	struct addrinfo* address_info;
 	result = getaddrinfo(NULL, port, &hints, &address_info);
 	if (result != 0) 
